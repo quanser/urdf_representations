@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot  name='qbot_platform'>
+    <material name="Blue">
+        <color rgba="0.0 0.0 0.8 1.0"/>
+    </material>
+
+  <link name='base_link'>
+    <visual>
+		  <origin xyz = "0 0 0" rpy = "0.0 0.0 0" />
+      <geometry>
+        <mesh filename="package://qbot_platform/meshes/qbot_platform_body.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+
+    </visual>
+    <inertial>
+		  <origin xyz = "0 0 0" rpy = "0 0.0 0.0" />
+      <mass  value = "20.87" />
+      <inertia ixx  = "0.001" ixy = "0" ixz = "0" iyy = "0.001"  iyz = "0" izz =  "0.8122" />
+    </inertial>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <mesh filename="package://qbot_platform/meshes/qbot_platform_body.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+  </link>
+  <joint name='left_wheel_joint' type='revolute'>
+    <parent link="base_link" />
+    <child link ="left_wheel" />
+		<origin xyz = "-0.015 0.1965 -0.06" rpy = "1.57 1.57 0" />
+    <axis xyz =  "0 0 1" />
+    <limit lower="-1e+16" upper="1e+16" effort="300" velocity="2"/>
+  </joint>
+  <link name='left_wheel'>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename='package://qbot_platform/meshes/qbot_platform_wheel.stl' scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Blue"/>
+    </visual>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value = "0.005" />
+      <inertia ixx = "9.75e-07" ixy = "0" ixz = "0" iyy = "0.000166704" iyz= "0" izz = "0.000167604"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename='package://qbot_platform/meshes/qbot_platform_wheel.stl' scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name='right_wheel_joint' type='revolute'>
+    <parent link = "base_link" />
+    <child link = "right_wheel" />
+		<origin xyz = "-0.015 -0.1965 -0.06" rpy = "1.57 1.57 0" />
+    <axis xyz= "0 0 1"/>
+    <limit lower="-1e+16" upper="1e+16" effort="300" velocity="2"/>
+  </joint>
+  <link name='right_wheel'>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename='package://qbot_platform/meshes/qbot_platform_wheel.stl' scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Blue"/>
+    </visual>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value = "0.005" />
+      <inertia
+        ixx = "9.75e-07"
+        ixy = "0"
+        ixz = "0"
+        iyy = "0.000166704"
+        iyz= "0"
+        izz = "0.000167604"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename='package://qbot_platform/meshes/qbot_platform_wheel.stl ' scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <transmission name="wheel_right_transmission">
+    <robotNamespace>/qbot_platform</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wheel_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_right_motor">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="wheel_left_transmission">
+      <robotNamespace>/qbot_platform</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="left_wheel_joint">
+          <hardwareInterface>PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="left_wheel_motor">
+          <hardwareInterface>PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+  </transmission>
+</robot>
